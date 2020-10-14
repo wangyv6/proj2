@@ -56,7 +56,7 @@ def saveConf(configPath="config.json"):
 
 # 获取串口
 def getSerial(port='/dev/ttyUSB0',
-                 baudrate=9600,
+                 baudrate=115200,
                  parity=serial.PARITY_NONE,
                  stopbits=serial.STOPBITS_ONE,
                  bytesize=serial.EIGHTBITS):
@@ -69,22 +69,25 @@ def getSerial(port='/dev/ttyUSB0',
 
 
 
-def serialMsgSender(ser, Msg):
+def serialSendMsg( Msg,ser ):
     r""" 通用信息发送 """
-    retMsg = ""
-    with open('obRec') as f:
-        msg = str(time.asctime()) + ' ' + obj + ' ' + pos + '\n'
-
-        f.write(msg)
+    msg = Msg+'\r\r\n'
+    ser.write(msg.encode('ascii'))
+    time.sleep(0.2) # 必要的等待时间 
+    retMsg = ser.read_all().decode('ascii')[len(msg):].split('\r\n')
+    retMsg = [i for i in retMsg   if len(i)!=0 ]
+    # print(retMsg)
+    return retMsg   
 
 
 if __name__ == "__main__":
 
-    saveConf()
+    # saveConf()
     # cfg = readConf()
     # print(cfg)
     # serialcfg  = cfg['devs']['sim7020c']
     # print(serialcfg)
     se  =getSerial()
-    
+    msg = serialSendMsg("AT",se)
+    print(msg)
     pass
