@@ -94,6 +94,16 @@ def serialSendMsg( Msg,ser ):
     return retMsg   
 
 
+# 向缓冲区写入信息？？？
+def writeMsg(id,type,msg):
+    r""" 信息暂存 """
+    msg = str(id)+','+str(type)+','+str(msg) +'\n'
+    with open('msg') as f:
+        f.write(msg)
+        pass 
+   
+
+
 if __name__ == "__main__":
 
     # saveConf()
