@@ -1,4 +1,4 @@
-from mUtils import serialSendMsg  ,readConf ,getSerial
+from mUtils import serialSendMsg  ,readConf ,getSerial,writeSensorMsg 
 import time
 
 
