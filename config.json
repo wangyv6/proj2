@@ -1,4 +1,5 @@
 {
+
     "isDbg": true,
     "isLockEs": false,
     "confFileName": "config.json",
@@ -8,6 +9,13 @@
             "bps": 9600,
             "stopbit": 1,
             "parity": 0
+        },
+        "lvt": {
+            "path": "/dev/ttyUSB0",
+            "bps": 9600,
+            "stopbit": 1,
+            "parity": 0,
+            "timeout": 5
         },
         "dht11": {
             "outPin": 0

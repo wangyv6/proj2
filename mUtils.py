@@ -28,6 +28,8 @@ class serialConfig:
         self.devicePath = '/dev/ttyUSB0'  # 一般是这样 也可能是USB1
 
 # 读取配置文件
+
+
 def readConf(configPath="config.json"):
     r""" 读取配置文件
         configPath 文件绝对路径
@@ -46,21 +48,27 @@ def saveConf(configPath="config.json"):
         手动重置配置文件，调试用
     """
     data = {
-        "isDbg": True,          # 是否是调试状态
+        "isDbg": True,
         "isLockEs": False,
-        "confFileName": configPath,  # 文件保存位置
-        "devs": {                    # 单个传感器配置信息
+        "confFileName": "config.json",
+        "devs": {
             "sim7020c": {
                 "path": "/dev/ttyUSB0",
                 "bps": 9600,
                 "stopbit": 1,
+                "parity": 0
+            },
+            "lvt": {
+                "path": "/dev/ttyUSB0",
+                "bps": 9600,
+                "stopbit": 1,
                 "parity": 0,
+                "timeout": 5
             },
             "dht11": {
                 "outPin": 0
             }
         }
-
     }
     # data = json.loads(str(data).encode("utf8"))
     with open(configPath, 'w') as f:
@@ -69,10 +77,10 @@ def saveConf(configPath="config.json"):
 
 # 获取串口
 def getSerial(port='/dev/ttyUSB0',
-                 baudrate=115200,
-                 parity=serial.PARITY_NONE,
-                 stopbits=serial.STOPBITS_ONE,
-                 bytesize=serial.EIGHTBITS):
+              baudrate=115200,
+              parity=serial.PARITY_NONE,
+              stopbits=serial.STOPBITS_ONE,
+              bytesize=serial.EIGHTBITS):
     r""" 获取配置好的串口 ，返回串口se"""
     se = serial.Serial(port=port, baudrate=baudrate,
                        parity=parity, stopbits=stopbits, bytesize=bytesize)
@@ -81,27 +89,25 @@ def getSerial(port='/dev/ttyUSB0',
 # infor
 
 
-
 # 串口消息发送
-def serialSendMsg( Msg,ser ):
+def serialSendMsg(Msg, ser):
     r""" 通用信息发送 """
     msg = Msg+'\r\r\n'
     ser.write(msg.encode('ascii'))
-    time.sleep(0.2) # 必要的等待时间 
+    time.sleep(0.2)  # 必要的等待时间
     retMsg = ser.read_all().decode('ascii')[len(msg):].split('\r\n')
-    retMsg = [i for i in retMsg   if len(i)!=0 ]
+    retMsg = [i for i in retMsg if len(i) != 0]
     # print(retMsg)
-    return retMsg   
+    return retMsg
 
 
 # 向缓冲区写入信息？？？
-def writeMsg(id,type,msg):
+def writeMsg(id, type, msg):
     r""" 信息暂存 """
-    msg = str(id)+','+str(type)+','+str(msg) +'\n'
+    msg = str(id)+','+str(type)+','+str(msg) + '\n'
     with open('msg') as f:
         f.write(msg)
-        pass 
-   
+        pass
 
 
 if __name__ == "__main__":
@@ -111,7 +117,7 @@ if __name__ == "__main__":
     # print(cfg)
     # serialcfg  = cfg['devs']['sim7020c']
     # print(serialcfg)
-    se  =getSerial()
-    msg = serialSendMsg("AT",se)
+    se = getSerial()
+    msg = serialSendMsg("AT", se)
     print(msg)
     pass
