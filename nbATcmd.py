@@ -3,7 +3,7 @@ import time
 
 
 ser = getSerial()
-AT_CMD = ["AT+CGREG?","AT+MIPLCREATE"]
+# AT_CMD = ["AT+CGREG?","AT+MIPLCREATE"]
 def signalCallBack():
     print("signal too week")
 

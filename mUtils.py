@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
 
 import json
 import os
@@ -5,6 +7,17 @@ import time
 import serial
 
 import json
+
+'''
+@File    :   ${NAME}.py
+@Contact :   raogx.vip@hotmail.com
+@License :   (C)Copyright 2017-2018, Liugroup-NLPR-CASIA
+
+@Modify Time      @Author    @Version    @Desciption
+------------      -------    --------    -----------
+${DATE} ${TIME}   gxrao      1.0         None
+'''
+
 
 configMsg = []
 
@@ -69,6 +82,7 @@ def getSerial(port='/dev/ttyUSB0',
 
 
 
+# 串口消息发送
 def serialSendMsg( Msg,ser ):
     r""" 通用信息发送 """
     msg = Msg+'\r\r\n'
