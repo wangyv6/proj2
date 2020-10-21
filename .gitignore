@@ -2,3 +2,4 @@
 *.code-workspace
 /private/
 /.idea/
+/__pycache__/
